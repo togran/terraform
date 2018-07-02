@@ -171,8 +171,8 @@ data "template_file" "task_definition" {
   template = "${file("${path.module}/task-definition.json")}"
 
   vars {
-    image_url        = "web:latest"
-    container_name   = "web"
+    image_url        = "jenkins:latest"
+    container_name   = "jenkins"
     log_group_region = "${var.aws_region}"
     log_group_name   = "${aws_cloudwatch_log_group.app.name}"
   }
@@ -192,8 +192,8 @@ resource "aws_ecs_service" "test" {
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.test.id}"
-    container_name   = "web"
-    container_port   = "2368"
+    container_name   = "jenkins"
+    container_port   = "8080"
   }
 
   depends_on = [
